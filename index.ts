@@ -78,6 +78,7 @@ ws.on('message', async (data: Uint8Array) => {
 
           agent.post({
             createdAt: new Date().toISOString(),
+            text: '',
             reply: post.reply,
             embed: {
               $type: 'app.bsky.embed.images',
@@ -89,6 +90,8 @@ ws.on('message', async (data: Uint8Array) => {
               ],
             }
           });
+
+          console.log('Vampetaço posted!', new Date().toISOString());
         }
       }
     }
