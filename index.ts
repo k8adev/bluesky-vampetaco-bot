@@ -76,10 +76,17 @@ ws.on('message', async (data: Uint8Array) => {
             { encoding: 'image/png' }
           );
 
+
           agent.post({
             createdAt: new Date().toISOString(),
             text: '',
-            reply: post.reply,
+            reply: {
+              root: post.reply.root,
+              parent: {
+                cid: op.cid.toString(),
+                uri: `at://${payload.repo}/${op.path}`,
+              },
+            },
             embed: {
               $type: 'app.bsky.embed.images',
               images: [
