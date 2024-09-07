@@ -6,7 +6,7 @@
   },
   "type": "module",
   "scripts": {
-    "serve": "node index.ts",
+    "serve": "node index.js",
     "build": "npx tsc",
     "dev": "npx tsc -w"
   },
