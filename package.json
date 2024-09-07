@@ -1,0 +1,22 @@
+{
+  "name": "bluesky-vampetaco-bot",
+  "author": {
+    "name": "Keit Ollé",
+    "email": "keit.olle@icloud.com"
+  },
+  "type": "module",
+  "scripts": {
+    "serve": "node index.ts",
+    "build": "npx tsc",
+    "dev": "npx tsc -w"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.6.20",
+    "@ipld/car": "^5.3.2",
+    "dotenv": "^16.3.1",
+    "process": "^0.11.10"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
