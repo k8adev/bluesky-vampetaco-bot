@@ -76,12 +76,11 @@ ws.on('message', async (data: Uint8Array) => {
             { encoding: 'image/png' }
           );
 
-
           agent.post({
             createdAt: new Date().toISOString(),
             text: '',
             reply: {
-              root: post.reply.root,
+              root: post.reply?.root,
               parent: {
                 cid: op.cid.toString(),
                 uri: `at://${payload.repo}/${op.path}`,
@@ -99,6 +98,7 @@ ws.on('message', async (data: Uint8Array) => {
           });
 
           console.log('Vampetaço posted!', new Date().toISOString());
+          console.log('Trigger:', ops, post);
         }
       }
     }
