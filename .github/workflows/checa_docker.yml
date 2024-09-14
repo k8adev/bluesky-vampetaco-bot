@@ -1,0 +1,51 @@
+name: "Docker check"
+
+on:
+  pull_request:
+    paths:
+      - .github/**
+
+env:
+  image_name: "bluesky-vampetaco-bot"
+
+
+permissions:
+  security-events: write
+  actions: read
+  contents: read
+  pull-requests: write
+
+jobs:
+  docker:
+    name: Docker check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          format: sarif
+          output-file: hadolint-results.sarif
+          no-fail: true
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: hadolint-results.sarif
+          wait-for-processing: true
+    
+      - name: Build docker image 
+        run: |
+          docker image build --tag ${{ env.image_name }}:${{ github.sha }} .
+
+      - name: Run vulnerability scan Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.image_name }}:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+          wait-for-processing: true
